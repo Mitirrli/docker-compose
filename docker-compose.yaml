@@ -7,9 +7,11 @@ services:
       context: .docker/php
       args:
         - PHP_VERSION=${PHP_VERSION}
+        - SWOOLE_VERSION=${SWOOLE_VERSION}
         - PHPREDIS_VERSION=${PHPREDIS_VERSION}
         - INSTALL_REDIS=${INSTALL_REDIS}
         - INSTALL_XDEBUG=${INSTALL_XDEBUG}
+        - INSTALL_SWOOLE=${INSTALL_SWOOLE}
     restart: always
     ports:
       - "${PHP_PORT}:9000"
