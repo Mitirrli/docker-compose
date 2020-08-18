@@ -3,9 +3,11 @@
 # ------------------------------------------------------------------------------------
 # @build-example docker-compose up -d
 # ------------------------------------------------------------------------------------
-FROM php:7.4.9-fpm-alpine
+ARG PHP_VERSION
+ARG PHPREDIS_VERSION
+FROM php:${PHP_VERSION}
 
-RUN echo http://mirrors.aliyun.com/alpine/v3.12/main>/etc/apk/repositories && echo http://mirrors.aliyun.com/alpine/v3.12/community>>/etc/apk/repositories
+RUN echo http://mirrors.aliyun.com/alpine/v3.12/main > /etc/apk/repositories && echo http://mirrors.aliyun.com/alpine/v3.12/community >> /etc/apk/repositories
 
 RUN apk add --no-cache oniguruma-dev \
     curl-dev \
@@ -31,14 +33,12 @@ RUN apk add --no-cache oniguruma-dev \
 RUN docker-php-ext-configure gd --with-freetype=/usr/include/ --with-jpeg=/usr/include/ \
     && docker-php-ext-install gd bcmath pdo_mysql mysqli opcache pcntl mbstring sockets
 
-ENV PHPREDIS_VERSION=5.3.1
-
 # Install Composer.
 RUN wget https://mirrors.aliyun.com/composer/composer.phar -O /usr/local/bin/composer \
     && chmod a+x /usr/local/bin/composer \
     && composer config -g repo.packagist composer https://mirrors.aliyun.com/composer \
     && composer self-update --clean-backups \
-# Install Redis Extension.
+    # Install Redis Extension.
     && wget http://pecl.php.net/get/redis-${PHPREDIS_VERSION}.tgz -O /tmp/redis.tar.tgz \
     && pecl install /tmp/redis.tar.tgz \
     && rm -rf /tmp/redis.tar.tgz \
