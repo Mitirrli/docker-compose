@@ -4,7 +4,6 @@
 # @build-example docker-compose up -d
 # ------------------------------------------------------------------------------------
 ARG PHP_VERSION
-ARG PHPREDIS_VERSION
 FROM php:${PHP_VERSION}
 
 RUN echo http://mirrors.aliyun.com/alpine/v3.12/main > /etc/apk/repositories && echo http://mirrors.aliyun.com/alpine/v3.12/community >> /etc/apk/repositories
@@ -37,21 +36,28 @@ RUN docker-php-ext-configure gd --with-freetype=/usr/include/ --with-jpeg=/usr/i
 RUN wget https://mirrors.aliyun.com/composer/composer.phar -O /usr/local/bin/composer \
     && chmod a+x /usr/local/bin/composer \
     && composer config -g repo.packagist composer https://mirrors.aliyun.com/composer \
-    && composer self-update --clean-backups \
-    # Install Redis Extension.
-    && wget http://pecl.php.net/get/redis-${PHPREDIS_VERSION}.tgz -O /tmp/redis.tar.tgz \
+    && composer self-update --clean-backups
+
+# Redis extension.
+ARG PHPREDIS_VERSION
+ARG INSTALL_REDIS=false
+RUN if [ ${INSTALL_REDIS} = true ]; then \
+    wget http://pecl.php.net/get/redis-${PHPREDIS_VERSION}.tgz -O /tmp/redis.tar.tgz \
     && pecl install /tmp/redis.tar.tgz \
     && rm -rf /tmp/redis.tar.tgz \
-    && docker-php-ext-enable redis
+    && docker-php-ext-enable redis \
+;fi
 
-# Install Xdebug Extension
-RUN pecl install xdebug && docker-php-ext-enable xdebug
-RUN { \
-        echo 'xdebug.remote_enable = 1'; \
-        echo 'xdebug.remote_autostart = 1'; \
-        echo 'xdebug.remote_port = 9001'; \
-        echo 'xdebug.remote_host = docker.for.mac.localhost'; \
-    } > /usr/local/etc/php/conf.d/xdebug.ini
+# Xdebug extension.
+ARG INSTALL_XDEBUG=false
+RUN if [ ${INSTALL_XDEBUG} = true ]; then \
+    pecl install xdebug \
+    && docker-php-ext-enable xdebug \
+    && echo 'xdebug.remote_enable = 1' > /usphp -r/local/etc/php/conf.d/xdebug.ini \
+    && echo 'xdebug.remote_autostart = 1' >> /usr/local/etc/php/conf.d/xdebug.ini \
+    && echo 'xdebug.remote_port = 9001' >> /usr/local/etc/php/conf.d/xdebug.ini \
+    && echo 'xdebug.remote_host = docker.for.mac.localhost' >> /usr/local/etc/php/conf.d/xdebug.ini \
+;fi
 
 WORKDIR /var/www/html
 
