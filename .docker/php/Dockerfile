@@ -49,7 +49,7 @@ ARG INSTALL_XDEBUG=false
 RUN if [ ${INSTALL_XDEBUG} = true ]; then \
   pecl install xdebug \
   && docker-php-ext-enable xdebug \
-  && echo 'xdebug.remote_enable = 1' > /usphp -r/local/etc/php/conf.d/xdebug.ini \
+  && echo 'xdebug.remote_enable = 1' > /usr/local/etc/php/conf.d/xdebug.ini \
   && echo 'xdebug.remote_autostart = 1' >> /usr/local/etc/php/conf.d/xdebug.ini \
   && echo 'xdebug.remote_port = 9001' >> /usr/local/etc/php/conf.d/xdebug.ini \
   && echo 'xdebug.remote_host = docker.for.mac.localhost' >> /usr/local/etc/php/conf.d/xdebug.ini \
