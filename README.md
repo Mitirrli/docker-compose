@@ -25,3 +25,11 @@ docker-compose up -d 在后台运行
 
 docker exec -it [container] sh
 ```
+
+```
+开启Xdebug
+
+Preferences -> Set Debug port 9001
+
+That's ok!
+```
