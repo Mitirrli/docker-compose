@@ -2,8 +2,8 @@
 *
 
 # allow files belows
-.docker
-.env.example
-README.md
-LICENSE
-docker-compose.yaml
+!.docker
+!.env.example
+!README.md
+!LICENSE
+!docker-compose.yaml
