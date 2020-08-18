@@ -4,6 +4,7 @@
 # allow files belows
 !.docker
 !.env.example
+!.editorconfig
 !README.md
 !LICENSE
 !docker-compose.yaml
