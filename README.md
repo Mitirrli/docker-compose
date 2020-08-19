@@ -11,13 +11,13 @@ cp .env.example .env
 ```
 
 ```
-启动
+docker-compose up 前台启动
 
-docker-compose up
+docker-compose up -d 后台启动
 
-OR
+docker-compose stop 暂停容器
 
-docker-compose up -d 在后台运行
+docker-compose start 启动容器
 ```
 
 ```
