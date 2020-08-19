@@ -12,13 +12,13 @@ RUN apk add --no-cache oniguruma-dev \
   curl-dev \
   libxml2-dev \
   libzip-dev \
-  libpng-dev freetype \
+  libpng-dev \
+  freetype \
   libpng \
   openssl-dev \
   libffi-dev \
   libjpeg-turbo \
   freetype-dev \
-  libpng-dev \
   jpeg-dev \
   libjpeg \
   libjpeg-turbo-dev \
@@ -29,7 +29,7 @@ RUN apk add --no-cache oniguruma-dev \
   icu-dev
 
 RUN docker-php-ext-configure gd --with-freetype=/usr/include/ --with-jpeg=/usr/include/ \
-  && docker-php-ext-install gd bcmath pdo_mysql mysqli opcache pcntl mbstring sockets
+  && docker-php-ext-install gd bcmath pdo_mysql opcache mbstring
 
 RUN wget https://mirrors.aliyun.com/composer/composer.phar -O /usr/local/bin/composer \
   && chmod a+x /usr/local/bin/composer \
