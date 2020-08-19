@@ -10,3 +10,5 @@ jobs:
         run: cp .env.example .env
       - name: Build the stack
         run: docker-compose up -d
+      - name: Exec the docker
+        run: docker exec -it web php sh
