@@ -5,8 +5,6 @@
 ```
 
 ```
-配置环境变量
-
 cp .env.example .env
 ```
 
