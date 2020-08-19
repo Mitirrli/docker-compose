@@ -3,7 +3,7 @@ name: Docker Compose Actions Workflow
 on: push
 jobs:
   test:
-    runs-on: ubuntu-latest
+    runs-on: alpine:latest
     steps:
       - uses: actions/checkout@v2
       - name: Copy the environment
