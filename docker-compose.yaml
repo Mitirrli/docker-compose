@@ -2,7 +2,7 @@ version: '3.7'
 
 services:
   php:
-    container_name: php
+    container_name: ${PHP_CONTAINER_NAME}
     build:
       context: .docker/php
       args:
@@ -21,7 +21,7 @@ services:
       - ./:/var/www/html
 
   web:
-    container_name: web
+    container_name: ${NGINX_CONTAINER_NAME}
     image: nginx:${NGINX_VERSION}
     restart: always
     ports:
@@ -33,7 +33,7 @@ services:
       - ./.docker/nginx/conf.d:/etc/nginx/conf.d
 
   redis:
-    container_name: redis
+    container_name: ${REDIS_CONTAINER_NAME}
     image: redis:${REDIS_VERSION}
     restart: always
     ports:
