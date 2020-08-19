@@ -55,6 +55,22 @@ RUN if [ ${INSTALL_XDEBUG} = true ]; then \
   && echo 'xdebug.remote_host = docker.for.mac.localhost' >> /usr/local/etc/php/conf.d/xdebug.ini \
 ;fi
 
+ARG XLSWRITER_VERSION
+ARG INSTALL_XLSWRITER=false
+RUN if [ ${INSTALL_XLSWRITER} = true ]; then \
+  curl -fsSL "https://pecl.php.net/get/xlswriter-${XLSWRITER_VERSION}.tgz" -o xlswriter.tgz \
+  && mkdir -p /tmp/xlswriter \
+  && tar -xf xlswriter.tgz -C /tmp/xlswriter --strip-components=1 \
+  && rm xlswriter.tgz \
+  && cd /tmp/xlswriter \
+  && phpize \
+  && ./configure --enable-reader \
+  && make -j$(nproc) \
+  && make install \
+  && rm -rf /xlswriter \
+  && docker-php-ext-enable xlswriter \
+;fi
+
 ARG SWOOLE_VERSION
 ARG INSTALL_SWOOLE=false
 RUN if [ ${INSTALL_SWOOLE} = true ]; then \
