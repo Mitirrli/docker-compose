@@ -7,7 +7,7 @@ Usage:
 
 2 . add project
 
-3 . add project nginx conf in conf.d
+3 . add nginx conf in conf.d
 ```
 
 ```
