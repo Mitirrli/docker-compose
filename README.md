@@ -27,7 +27,9 @@ docker exec -it [container] sh 进入容器
 ```
 Enable Xdebug:
 
-Preferences -> Set Debug port 9001
+1 . Preferences -> Set Debug port 9001
+
+2 . Select path mapping 
 
 That's ok!
 ```
