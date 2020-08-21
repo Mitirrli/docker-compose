@@ -29,7 +29,7 @@ RUN apk add --no-cache oniguruma-dev \
   icu-dev
 
 RUN docker-php-ext-configure gd --with-freetype=/usr/include/ --with-jpeg=/usr/include/ \
-  && docker-php-ext-install gd bcmath pdo_mysql opcache mbstring
+  && docker-php-ext-install gd bcmath pdo_mysql opcache mbstring sockets
 
 RUN wget https://mirrors.aliyun.com/composer/composer.phar -O /usr/local/bin/composer \
   && chmod a+x /usr/local/bin/composer \
