@@ -1,5 +1,7 @@
 # Quick start
 
+支持多版本php，仅需单版本可在docker-compose注释相对应的代码
+
 ```
 Usage:
 
