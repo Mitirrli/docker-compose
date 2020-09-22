@@ -22,22 +22,6 @@ RUN if [ ${INSTALL_REDIS} = true ]; then \
   && docker-php-ext-enable redis \
 ;fi
 
-ARG INSTALL_XDEBUG=false
-RUN if [ ${INSTALL_XDEBUG} = true ]; then \
-  git clone https://gitee.com/mirrorgit/xdebug.git \
-  && cd xdebug \
-  && git checkout tags/XDEBUG_2_5_5 \
-  && phpize \
-  && ./configure --enable-xdebug \
-  && make \
-  && make install \
-  && docker-php-ext-enable xdebug \
-  && echo 'xdebug.remote_enable = 1' > /usr/local/etc/php/conf.d/xdebug.ini \
-  && echo 'xdebug.remote_autostart = 1' >> /usr/local/etc/php/conf.d/xdebug.ini \
-  && echo 'xdebug.remote_port = 9001' >> /usr/local/etc/php/conf.d/xdebug.ini \
-  && echo 'xdebug.remote_host = docker.for.mac.localhost' >> /usr/local/etc/php/conf.d/xdebug.ini \
-;fi
-
 RUN wget https://mirrors.aliyun.com/composer/composer.phar -O /usr/local/bin/composer \
   && chmod a+x /usr/local/bin/composer \
   && composer config -g repo.packagist composer https://mirrors.aliyun.com/composer \
