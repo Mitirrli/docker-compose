@@ -1,14 +1,14 @@
-version: '3.7'
+version: '3.0'
 
 services:
-  php:
-    container_name: ${PHP_CONTAINER_NAME}
+  php7:
+    container_name: ${PHP7_CONTAINER_NAME}
     build:
-      context: .docker/php
+      context: .docker/php/7.0
       args:
-        - PHP_VERSION=${PHP_VERSION}
+        - PHP7_VERSION=${PHP7_VERSION}
+        - PHP7REDIS_VERSION=${PHP7REDIS_VERSION}
         - SWOOLE_VERSION=${SWOOLE_VERSION}
-        - PHPREDIS_VERSION=${PHPREDIS_VERSION}
         - XLSWRITER_VERSION=${XLSWRITER_VERSION}
         - INSTALL_REDIS=${INSTALL_REDIS}
         - INSTALL_XDEBUG=${INSTALL_XDEBUG}
@@ -16,10 +16,23 @@ services:
         - INSTALL_SWOOLE=${INSTALL_SWOOLE}
     restart: always
     ports:
-      - "${PHP_PORT}:9000"
+      - "${PHP7_PORT}:9000"
     volumes:
       - ./:/var/www/html
-
+  php5:
+    container_name: ${PHP5_CONTAINER_NAME}
+    build:
+      context: .docker/php/5.5
+      args:
+        - PHP5_VERSION=${PHP5_VERSION}
+        - PHP5REDIS_VERSION=${PHP5REDIS_VERSION}
+        - INSTALL_REDIS=${INSTALL_REDIS}
+        - INSTALL_XDEBUG=${INSTALL_XDEBUG}
+    restart: always
+    ports:
+      - "${PHP5_PORT}:9000"
+    volumes:
+      - ./:/var/www/html
   web:
     container_name: ${NGINX_CONTAINER_NAME}
     image: nginx:${NGINX_VERSION}
@@ -31,7 +44,6 @@ services:
     volumes:
       - ./:/var/www/html
       - ./.docker/nginx/conf.d:/etc/nginx/conf.d
-
   redis:
     container_name: ${REDIS_CONTAINER_NAME}
     image: redis:${REDIS_VERSION}

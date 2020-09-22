@@ -3,12 +3,13 @@
 # ------------------------------------------------------------------------------------
 # @build-example docker-compose up -d
 # ------------------------------------------------------------------------------------
-ARG PHP_VERSION
-FROM php:${PHP_VERSION}
+ARG PHP7_VERSION
+FROM php:${PHP7_VERSION}
 
 RUN echo http://mirrors.aliyun.com/alpine/v3.12/main > /etc/apk/repositories && echo http://mirrors.aliyun.com/alpine/v3.12/community >> /etc/apk/repositories
 
-RUN apk add --no-cache oniguruma-dev \
+RUN apk add --no-cache \
+  oniguruma-dev \
   curl-dev \
   libxml2-dev \
   libzip-dev \
@@ -29,17 +30,17 @@ RUN apk add --no-cache oniguruma-dev \
   icu-dev
 
 RUN docker-php-ext-configure gd --with-freetype=/usr/include/ --with-jpeg=/usr/include/ \
-  && docker-php-ext-install gd bcmath pdo_mysql opcache mbstring sockets
+  && docker-php-ext-install gd bcmath pdo_mysql sockets
 
 RUN wget https://mirrors.aliyun.com/composer/composer.phar -O /usr/local/bin/composer \
   && chmod a+x /usr/local/bin/composer \
   && composer config -g repo.packagist composer https://mirrors.aliyun.com/composer \
   && composer self-update --clean-backups
 
-ARG PHPREDIS_VERSION
+ARG PHP7REDIS_VERSION
 ARG INSTALL_REDIS=false
 RUN if [ ${INSTALL_REDIS} = true ]; then \
-  wget http://pecl.php.net/get/redis-${PHPREDIS_VERSION}.tgz -O /tmp/redis.tar.tgz \
+  wget http://pecl.php.net/get/redis-${PHP7REDIS_VERSION}.tgz -O /tmp/redis.tar.tgz \
   && pecl install /tmp/redis.tar.tgz \
   && rm -rf /tmp/redis.tar.tgz \
   && docker-php-ext-enable redis \
