@@ -1,6 +1,6 @@
 # Quick start
 
-支持php8的快速部署脚本
+docker-compose 快速部署脚本
 
 ```
 Usage:
@@ -24,14 +24,4 @@ docker-compose start 启动容器
 docker-compose down -v 停止并删除容器
 
 docker exec -it [container] sh 进入容器
-```
-
-```
-Enable Xdebug:
-
-1 . Preferences -> Set Debug port 9001
-
-2 . Select path mapping 
-
-That's ok!
 ```
