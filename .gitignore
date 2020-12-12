@@ -3,6 +3,7 @@
 
 # allow files belows
 !.docker
+!.vscode
 !.env.example
 !.editorconfig
 !README.md
