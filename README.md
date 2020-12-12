@@ -1,6 +1,6 @@
 # Quick start
 
-支持多版本php，仅需单版本可在docker-compose注释相对应的代码
+支持php8的快速部署脚本
 
 ```
 Usage:
@@ -8,8 +8,6 @@ Usage:
 1 . cp .env.example .env 
 
 2 . add project
-
-3 . add nginx conf in conf.d
 ```
 
 ```
