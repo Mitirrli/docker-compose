@@ -48,14 +48,15 @@ RUN if [ ${INSTALL_REDIS} = true ]; then \
 ;fi
 
 # 安装xdebug
-ENV PHPXDEBUG_VERSION=3.0.1
+ENV PHPXDEBUG_VERSION=3.0.4
 RUN wget http://pecl.php.net/get/xdebug-${PHPXDEBUG_VERSION}.tgz -O /tmp/xdebug.tar.tgz \
     && pecl install /tmp/xdebug.tar.tgz \
     && rm -rf /tmp/xdebug.tar.tgz \ 
     && docker-php-ext-enable xdebug \
     && echo 'xdebug.mode = debug' > /usr/local/etc/php/conf.d/xdebug.ini \
     && echo 'xdebug.start_with_request = yes' >> /usr/local/etc/php/conf.d/xdebug.ini \
-    && echo 'xdebug.client_host = 192.168.0.132' >> /usr/local/etc/php/conf.d/xdebug.ini
+    && echo 'xdebug.client_host = 192.168.0.132' >> /usr/local/etc/php/conf.d/xdebug.ini \
+    && echo 'xdebug.log_level = 0' >> /usr/local/etc/php/conf.d/xdebug.ini
 
 WORKDIR /www
 
